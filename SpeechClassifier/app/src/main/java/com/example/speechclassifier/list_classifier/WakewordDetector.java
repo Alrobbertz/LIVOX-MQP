@@ -1,4 +1,4 @@
-package list_classifier;
+package com.example.speechclassifier.list_classifier;
 
 import java.util.List;
 

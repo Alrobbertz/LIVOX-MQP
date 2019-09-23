@@ -54,16 +54,19 @@ class SpeechRecognizerHelper(private val mContext: Context,
         if(isRecognizerAvailable) {
             // Create Speech Recognizer Instance
             mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(mContext)
+            Log.d(TAG, "initialized speech recognizer")
         } else {
             Log.d(TAG, "SPEECH RECOGNIZER IS NOT AVAILABLE")
         }
 
         if(mSpeechRecognizer != null) {
+            Log.d(TAG, "added speech recognizer callback")
             mSpeechRecognizer?.setRecognitionListener(mSpeechRecognitionListener)
         }
     }
 
     fun startListening() {
+        Log.d(TAG, "startListening")
         if(!isListening) {
             mHandler.postDelayed({
                 if (mSpeechRecognizer == null) {

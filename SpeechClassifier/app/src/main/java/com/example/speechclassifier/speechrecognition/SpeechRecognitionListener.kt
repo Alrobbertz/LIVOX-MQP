@@ -83,6 +83,7 @@ class SpeechRecognitionListener(private val isListeningRepeating: Boolean,
     }
 
     override fun onResults(bundle: Bundle?) {
+        Log.d(TAG, "onResult")
         if (bundle != null && mListener != null) {
             val results = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
             val newResults = ArrayList<String>()
@@ -99,6 +100,7 @@ class SpeechRecognitionListener(private val isListeningRepeating: Boolean,
     }
 
     override fun onPartialResults(bundle: Bundle) {
+        Log.d(TAG, "onPartialResult")
         val results = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         if (results != null && mListener != null) {
             val partialResult = results[0]

@@ -11,6 +11,9 @@ import android.os.Build
 import android.os.Handler
 import android.util.Log
 import java.util.*
+import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator
+import com.example.speechclassifier.list_classifier.Phrase
+
 
 /**
  * Created by Jason on 11/28/17.
@@ -42,6 +45,9 @@ class QuestionManager(keyWord: String,
         Log.d(TAG, "KEYWORD HAS BEEN CALLED: CANCELLED!")
         mHasKeywordBeenCalled = false
     }
+
+    //This is the code for list classification
+    private val orchestrator: ListClassificationOrchestrator = ListClassificationOrchestrator();
 
     interface KeywordManagerCallback {
         fun onQuestionFound(filteredResult: FilteredResult)
@@ -98,11 +104,20 @@ class QuestionManager(keyWord: String,
             val isSentenceNotEmpty = filteredResult.sentenceToEvaluate?.isNotEmpty() as Boolean
             val isSentenceOnlyKeyword = filteredResult.sentenceToEvaluate == SpeechTriggerClassifier.KEYWORD_ONLY_TRIGGER
 
+            Log.d(TAG, "GOT HERE")
+
             if(isSentenceNotEmpty && !isSentenceOnlyKeyword){
                 // Play notification sound cause sentence with a trigger has been found
                 playNotificationSound(mCanPlaySound)
                 // Get the question type
                 // TODO Integrage here with Cole's Code
+
+                val filteredPhrase: Phrase = Phrase(filteredResult.originalResult)
+                orchestrator.classify(filteredPhrase)
+                Log.d(TAG, "Coles code")// + orchestrator.utterance)
+                Log.d(TAG, filteredPhrase.phrase)
+                Log.d(TAG, orchestrator.utterance)
+
                 //filteredResult.questionType = QuestionClassifier.getQuestionType(mContext, livoxNowHelper, filteredResult)
                 // Set has keyword been called to false to avoid any false positives
                 mHasKeywordBeenCalled = false
@@ -128,6 +143,7 @@ class QuestionManager(keyWord: String,
     override fun onSpeechPartialResult(partialResult: String) {
         if (mHasKeywordBeenCalled) {
             mKeywordHasBeenCalledHandler.removeCallbacks(mKeywordHasBeenCalledRunnable)
+            Log.d(TAG, "partial result")
         }
     }
 }

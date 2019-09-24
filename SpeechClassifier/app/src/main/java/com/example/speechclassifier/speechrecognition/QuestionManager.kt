@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.util.Log
+import com.example.speechclassifier.MainActivity
 import java.util.*
 import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator
 import com.example.speechclassifier.list_classifier.Phrase
@@ -23,7 +24,8 @@ class QuestionManager(keyWord: String,
                       languageTag: String,
                       private val mContext: Context,
                       private var mSoundUri: Uri?,
-                      private val mCallback: KeywordManagerCallback) : OnResultsReady {
+                      private val mCallback: KeywordManagerCallback,
+                      private val mainActivity: MainActivity) : OnResultsReady {
 
     companion object {
         private const val TAG = "SpeechRecognizerManager"
@@ -112,11 +114,22 @@ class QuestionManager(keyWord: String,
                 // Get the question type
                 // TODO Integrage here with Cole's Code
 
-                val filteredPhrase: Phrase = Phrase(filteredResult.originalResult)
+                val filteredPhrase = Phrase(filteredResult.originalResult)
                 orchestrator.classify(filteredPhrase)
                 Log.d(TAG, "Coles code")// + orchestrator.utterance)
                 Log.d(TAG, filteredPhrase.phrase)
                 Log.d(TAG, orchestrator.utterance)
+
+                mainActivity.setFullPhrase(filteredPhrase.phrase)
+                mainActivity.setInitiatorPhrase(orchestrator.launch)
+                mainActivity.setInvocationPhrase(orchestrator.invocation)
+                mainActivity.setListEntityPhrase(orchestrator.utterance)
+
+                //TODO add images
+                //mainActivity.setListEntityImage1()
+                //mainActivity.setListEntityText1()
+                //mainActivity.setListEntityImage2()
+                //mainActivity.setListEntityText2()
 
                 //filteredResult.questionType = QuestionClassifier.getQuestionType(mContext, livoxNowHelper, filteredResult)
                 // Set has keyword been called to false to avoid any false positives

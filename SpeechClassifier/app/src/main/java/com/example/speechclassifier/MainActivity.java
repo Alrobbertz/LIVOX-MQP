@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.speechclassifier.speechrecognition.QuestionManager.KeywordManagerCallback;
 import com.example.speechclassifier.speechrecognition.FilteredResult;
 import com.example.speechclassifier.speechrecognition.QuestionManager;
+
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.net.Uri;
@@ -46,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         invocationPhrase = rootView.findViewById(R.id.initiators_phrase);
         listEntityPhrase = rootView.findViewById(R.id.list_entity_phrase);
 
+        setFullPhrase("");
+        setInitiatorPhrase("");
+        setInvocationPhrase("");
+        setListEntityPhrase("");
 
         initNaturalConversation();
     }
@@ -64,45 +70,45 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         //int liteBlueColor = ContextCompat.getColor(this, R.color.lite_blue);
         //mMainLayout.setBackgroundColor(liteBlueColor);
 
-        QuestionManager mQuestionManager = new QuestionManager(mKeyword, languageTag, this, keywordSoundUri, this);
+        QuestionManager mQuestionManager = new QuestionManager(mKeyword, languageTag, this, keywordSoundUri, this, this);
         mQuestionManager.startListeningForKeyword();
         String keyword = mKeyword; //LivoxSettings.getNaturalConversationKeyword(this, mUserId);
         Log.d(TAG,  "Listening for KEYWORD " + keyword);
     }
 
-    public void onQuestionFound(FilteredResult filteredResult){
-
-    }
+    public void onQuestionFound(FilteredResult filteredResult){}
 
     public void setFullPhrase(String fullPhrase) {
-        this.fullPhrase = fullPhrase;
+        this.fullPhrase.setText("Full Phrase:" + fullPhrase);
     }
 
     public void setInitiatorPhrase(String initiatorPhrase) {
-        this.initiatorPhrase = initiatorPhrase;
+        this.initiatorPhrase.setText("Initiator Phrase:" + initiatorPhrase);
     }
 
     public void setInvocationPhrase(String invocationPhrase) {
-        this.invocationPhrase = invocationPhrase;
+        this.invocationPhrase.setText("Invocation Phrase:" + invocationPhrase);
     }
 
     public void setListEntityPhrase(String listEntityPhrase) {
-        this.listEntityPhrase = listEntityPhrase;
+        this.listEntityPhrase.setText("List Phrase:" + listEntityPhrase);
     }
 
-    public void setListEntityImage1(ImageView listEntityImage1) {
-        this.listEntityImage1 = listEntityImage1;
+    public void setListEntityImage1(Image listEntityImage2) {
+        //TODO add a set image function
+        //this.listEntityImage1.setImageBitmap();
     }
 
     public void setListEntityText1(String listEntityText1) {
-        this.listEntityText1 = listEntityText1;
+        this.listEntityText1.setText(listEntityText1);
     }
 
-    public void setListEntityImage2(ImageView listEntityImage2) {
-        this.listEntityImage2 = listEntityImage2;
+    public void setListEntityImage2(Image listEntityImage2) {
+        //TODO add a set image function
+        //this.listEntityImage2.setImageBitmap();
     }
 
     public void setListEntityText2(String listEntityText2) {
-        this.listEntityText2 = listEntityText2;
+        this.listEntityText2.setText(listEntityText2);
     }
 }

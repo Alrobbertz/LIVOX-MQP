@@ -110,6 +110,7 @@ class QuestionManager(keyWord: String,
             val isSentenceOnlyKeyword = filteredResult.sentenceToEvaluate == SpeechTriggerClassifier.KEYWORD_ONLY_TRIGGER
 
             Log.d(TAG, "GOT HERE")
+            Log.d(TAG, filteredResult.originalResult)
 
             if(isSentenceNotEmpty && !isSentenceOnlyKeyword){
                 // Play notification sound cause sentence with a trigger has been found
@@ -119,7 +120,10 @@ class QuestionManager(keyWord: String,
 
                 val filteredPhrase = Phrase(filteredResult.originalResult)
                 val success = orchestrator.classify(filteredPhrase)
-                if (success) {
+                if (!success) {
+                    Log.d(TAG, "Unsuccessful at parsing sentence")
+                }
+                else{
                     mainActivity.setFullPhrase(filteredPhrase.phrase)
                     mainActivity.setInitiatorPhrase(orchestrator.launch)
                     mainActivity.setInvocationPhrase(orchestrator.invocation)
@@ -127,13 +131,14 @@ class QuestionManager(keyWord: String,
 
                     //TODO add images
                     var listEntities: List<String> = orchestrator.listEntities;
-                    if(listEntities.size >= 2){
-                        //e.g. mainActivity.setListEntityImage2("https://storage.googleapis.com/livox-images/full/hot_dogs.png")
-                        var baseURL = "https://storage.googleapis.com/livox-images/full/";
-                        //TODO add Riches image resolving code.
-                        //mainActivity.setListEntityImage1()
+                    Log.d(TAG, listEntities.toString());
+                    if(listEntities.size == 2){
+                        var baseURL = "https://storage.googleapis.com/livox-images/full/"
+                        //TODO Rich, add the queries to the database
+                        //TODO This should take in the list entity and give back the image name in the database
+                        mainActivity.setListEntityImage1(baseURL + "hot_dogs.png")//TODO replace with the image name
                         mainActivity.setListEntityText1(listEntities[0])
-                        //mainActivity.setListEntityImage2()
+                        mainActivity.setListEntityImage2(baseURL + "symbol00000997.png")//TODO replace with the image name
                         mainActivity.setListEntityText2(listEntities[1])
                     }
                 }

@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class LaunchDetectorImpl extends LaunchDetector {
 	//initialize the launchPhrases
 		private String[] launchStrings  = {
-				"what do you want"
+				"what do you want",
+				"what would you like"
 		};
 		private ArrayList<Phrase> launchPhrases;
 		private void setupLaunchPhrases() {

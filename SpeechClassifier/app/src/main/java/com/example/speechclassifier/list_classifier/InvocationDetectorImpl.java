@@ -12,6 +12,8 @@ public class InvocationDetectorImpl extends InvocationDetector {
 	public void setupInvocationPhrases() {
 		invocationPhrases = new HashMap<Phrase, String>() {{
 			put(new Phrase("to have for lunch", preprocessor), "lunch");
+			put(new Phrase("for lunch", preprocessor), "lunch");
+			put(new Phrase("to eat for lunch", preprocessor), "lunch");
 		}};
 	}
 

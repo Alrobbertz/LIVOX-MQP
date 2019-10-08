@@ -34,67 +34,73 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
 
+
     <ImageView
         android:id="@+id/entity_1_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
+        android:layout_width="241dp"
+        android:layout_height="196dp"
         android:contentDescription="entity 1 image"
         app:layout_constraintBottom_toTopOf="@+id/entity_1_text"
         app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
+        app:layout_constraintTop_toBottomOf="@+id/list_entity_phrase"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/pizza"
+        tools:srcCompat="@drawable/pizza" />
 
     <ImageView
         android:id="@+id/entity_2_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
+        android:layout_width="220dp"
+        android:layout_height="212dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="159dp"
         android:contentDescription="entity 2 image"
         app:layout_constraintBottom_toTopOf="@+id/entity_2_text"
         app:layout_constraintStart_toEndOf="@+id/entity_1_image"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/list_entity_phrase"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/pasta"
+        tools:srcCompat="@drawable/pasta" />
 
     <TextView
         android:id="@+id/list_entity_phrase"
-        android:layout_width="330dp"
-        android:layout_height="25dp"
+        android:layout_width="411dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/entity_1_image"
         app:layout_constraintEnd_toEndOf="@+id/entity_2_image"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/entity_1_image" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invocation_phrase" />
 
     <TextView
-        android:id="@+id/intentions_phrase"
-        android:layout_width="330dp"
-        android:layout_height="25dp"
+        android:id="@+id/invocation_phrase"
+        android:layout_width="408dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/list_entity_phrase"
         app:layout_constraintEnd_toEndOf="@+id/entity_2_image"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/entity_1_image" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launch_phrase" />
 
     <TextView
-        android:id="@+id/initiators_phrase"
-        android:layout_width="330dp"
-        android:layout_height="25dp"
+        android:id="@+id/launch_phrase"
+        android:layout_width="413dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/intentions_phrase"
-        app:layout_constraintEnd_toEndOf="@+id/entity_2_image"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/entity_1_image" />
+        app:layout_constraintStart_toStartOf="@+id/full_phrase"
+        app:layout_constraintTop_toBottomOf="@+id/full_phrase" />
 
     <TextView
         android:id="@+id/full_phrase"
-        android:layout_width="330dp"
-        android:layout_height="25dp"
+        android:layout_width="413dp"
+        android:layout_height="61dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/initiators_phrase"
-        app:layout_constraintEnd_toEndOf="@+id/entity_2_image"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/entity_1_image" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

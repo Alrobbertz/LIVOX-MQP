@@ -79,6 +79,10 @@ public class ListClassificationOrchestrator {
 		int endIndex = udetector.getEndIndex();
 		return recentPhraseSubstring(startIndex, endIndex);
 	}
+
+	public List<String> getListEntities(){
+		return udetector.getUtteranceList();
+	}
 	
 	private String recentPhraseSubstring(int startIndex, int endIndex) {
 		return recentPhrase.getSubphrase(startIndex, endIndex);

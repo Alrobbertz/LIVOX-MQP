@@ -2,11 +2,13 @@ package com.example.speechclassifier.speechrecognition
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Handler
 import android.util.Log
@@ -14,6 +16,7 @@ import com.example.speechclassifier.MainActivity
 import java.util.*
 import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator
 import com.example.speechclassifier.list_classifier.Phrase
+import java.net.URL
 
 
 /**
@@ -115,22 +118,25 @@ class QuestionManager(keyWord: String,
                 // TODO Integrage here with Cole's Code
 
                 val filteredPhrase = Phrase(filteredResult.originalResult)
-                orchestrator.classify(filteredPhrase)
-                Log.d(TAG, "Coles code")// + orchestrator.utterance)
-                Log.d(TAG, filteredPhrase.phrase)
-                Log.d(TAG, orchestrator.utterance)
+                val success = orchestrator.classify(filteredPhrase)
+                if (success) {
+                    mainActivity.setFullPhrase(filteredPhrase.phrase)
+                    mainActivity.setInitiatorPhrase(orchestrator.launch)
+                    mainActivity.setInvocationPhrase(orchestrator.invocation)
+                    mainActivity.setListEntityPhrase(orchestrator.utterance)
 
-                mainActivity.setFullPhrase(filteredPhrase.phrase)
-                mainActivity.setInitiatorPhrase(orchestrator.launch)
-                mainActivity.setInvocationPhrase(orchestrator.invocation)
-                mainActivity.setListEntityPhrase(orchestrator.utterance)
-
-                //TODO add images
-                //mainActivity.setListEntityImage1()
-                //mainActivity.setListEntityText1()
-                //mainActivity.setListEntityImage2()
-                //mainActivity.setListEntityText2()
-
+                    //TODO add images
+                    var listEntities: List<String> = orchestrator.listEntities;
+                    if(listEntities.size >= 2){
+                        //e.g. mainActivity.setListEntityImage2("https://storage.googleapis.com/livox-images/full/hot_dogs.png")
+                        var baseURL = "https://storage.googleapis.com/livox-images/full/";
+                        //TODO add Riches image resolving code.
+                        //mainActivity.setListEntityImage1()
+                        mainActivity.setListEntityText1(listEntities[0])
+                        //mainActivity.setListEntityImage2()
+                        mainActivity.setListEntityText2(listEntities[1])
+                    }
+                }
                 //filteredResult.questionType = QuestionClassifier.getQuestionType(mContext, livoxNowHelper, filteredResult)
                 // Set has keyword been called to false to avoid any false positives
                 mHasKeywordBeenCalled = false

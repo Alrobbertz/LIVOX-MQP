@@ -53,6 +53,7 @@ public class UtteranceDetectorImpl extends UtteranceDetector {
 		for(int i = startIndex; i<= endIndex; i++) {
 			utteranceList.add(orchestrator.recentPhrase.getWord(i));
 		}
+		utteranceList.remove(1);//remove the or
 		return utteranceList;
 	}
 }

@@ -5,38 +5,48 @@ import java.util.List;
 
 public class Phrase {
 
-	private String phrase;//stores the original phrase
 	private List<String> tokens; //tokenizes and preprocesses the phrase
 
+	public static final ListPreprocessor preprocessor = new ListPreprocessor();
+
 	public Phrase(String phrase) {
-		this.phrase = phrase;
 		this.tokens = getTokens(phrase);
 	}
 
-	public Phrase(String phrase, ListPreprocessor preprocessor) {
-		this(phrase);
-		setPreprocessor(preprocessor);
+	private Phrase(List<String> words){
+		tokens = words;
 	}
 
 	private List<String> getTokens(String str){
-		return new ArrayList<String>() {{
-			String[] tokenArray = phrase.split(" ");
+		List<String> tokens = new ArrayList<String>() {{
+			String[] tokenArray = str.split(" ");
 			for(int i = 0; i < tokenArray.length;i++) {
 				add(tokenArray[i]);
 			}
 		}};
+		return preprocessor.process(tokens);
 	}
 
-	public void setPreprocessor(ListPreprocessor preprocessor) {
-		if(preprocessor != null) {
-			List<String> tokens =  getTokens(this.phrase);
-			tokens = preprocessor.process(tokens);
-			this.tokens = tokens;
-		}
+	public Phrase subPhrase(int start){
+		List<String> sublist = new ArrayList<String>(){{
+			for(int i = start; i < tokens.size(); i++)
+				add(tokens.get(i));
+		}};
+
+
+		Phrase subPhrase = new Phrase(sublist);
+		return subPhrase;
 	}
 
-	public String getPhrase() {
-		return phrase;
+	public Phrase subPhrase(int start, int end){
+		List<String> sublist = new ArrayList<String>(){{
+			for(int i = start; i < end; i++)
+				add(tokens.get(i));
+		}};
+
+
+		Phrase subPhrase = new Phrase(sublist);
+		return subPhrase;
 	}
 
 	public List<String> getWords(){
@@ -66,7 +76,7 @@ public class Phrase {
 	public int size() {
 		return tokens.size();
 	}
-	
+
 	public String getSubphrase(int startIndex, int endIndex) {
 		String phraseString = "";
 		for(int i = startIndex; i <= endIndex; i++) {
@@ -75,5 +85,9 @@ public class Phrase {
 				phraseString += " ";
 		}
 		return phraseString;
+	}
+
+	public String toString(){
+		return getSubphrase(0, tokens.size() - 1);
 	}
 }

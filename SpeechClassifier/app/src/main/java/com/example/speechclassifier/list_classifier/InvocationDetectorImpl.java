@@ -11,9 +11,10 @@ public class InvocationDetectorImpl extends InvocationDetector {
 	private HashMap<Phrase, String> invocationPhrases;
 	public void setupInvocationPhrases() {
 		invocationPhrases = new HashMap<Phrase, String>() {{
-			put(new Phrase("to have for lunch", preprocessor), "lunch");
-			put(new Phrase("for lunch", preprocessor), "lunch");
-			put(new Phrase("to eat for lunch", preprocessor), "lunch");
+			put(new Phrase("to have"), "item");
+			put(new Phrase("to have for lunch"), "lunch");
+			put(new Phrase("for lunch"), "lunch");
+			put(new Phrase("to eat for lunch"), "lunch");
 		}};
 	}
 
@@ -22,8 +23,8 @@ public class InvocationDetectorImpl extends InvocationDetector {
 	private int startIndex, endIndex; //both inclusive
 	private String intent;
 
-	public InvocationDetectorImpl(ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
-		super(orchestrator, preprocessor);
+	public InvocationDetectorImpl(ListClassificationOrchestrator orchestrator) {
+		super(orchestrator);
 		classified = false;
 		startIndex = -1;
 		endIndex = -1;

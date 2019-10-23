@@ -4,8 +4,8 @@ import java.util.List;
 
 public abstract class WakewordDetector extends ClassifierStep{
 	
-	public WakewordDetector(ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
-		super(orchestrator, preprocessor);
+	public WakewordDetector(ListClassificationOrchestrator orchestrator) {
+		super(orchestrator);
 	}
 	
 	public abstract int getWWIndex();

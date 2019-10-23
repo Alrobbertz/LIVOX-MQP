@@ -2,6 +2,7 @@ package com.example.speechclassifier.speechrecognition
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioManager
@@ -16,7 +17,14 @@ import com.example.speechclassifier.MainActivity
 import java.util.*
 import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator
 import com.example.speechclassifier.list_classifier.Phrase
+import com.example.speechclassifier.list_classifier.UtteranceDetectorOnline
+import java.io.BufferedInputStream
+import java.net.HttpURLConnection
 import java.net.URL
+import java.io.BufferedReader
+import java.io.FileOutputStream
+import java.io.InputStreamReader
+import java.util.regex.Pattern
 
 
 /**
@@ -114,9 +122,8 @@ class QuestionManager(keyWord: String,
 
             if(isSentenceNotEmpty && !isSentenceOnlyKeyword){
                 // Play notification sound cause sentence with a trigger has been found
-                playNotificationSound(mCanPlaySound)
+                //playNotificationSound(mCanPlaySound)
                 // Get the question type
-                // TODO Integrage here with Cole's Code
 
                 val filteredPhrase = Phrase(filteredResult.originalResult)
                 val success = orchestrator.classify(filteredPhrase)
@@ -124,21 +131,24 @@ class QuestionManager(keyWord: String,
                     Log.d(TAG, "Unsuccessful at parsing sentence")
                 }
                 else{
-                    mainActivity.setFullPhrase(filteredPhrase.phrase)
+                    Log.d(TAG, "" + orchestrator.wwStart + " " + orchestrator.lStart + " " + orchestrator.iStart + " " + orchestrator.uStart)
+                    mainActivity.setFullPhrase(filteredResult.originalResult)
                     mainActivity.setInitiatorPhrase(orchestrator.launch)
                     mainActivity.setInvocationPhrase(orchestrator.invocation)
                     mainActivity.setListEntityPhrase(orchestrator.utterance)
 
                     //TODO add images
-                    var listEntities: List<String> = orchestrator.listEntities;
-                    Log.d(TAG, listEntities.toString());
+                    var listEntities: List<String> = orchestrator.listEntities
+                    Log.d(TAG, listEntities.toString())
                     if(listEntities.size == 2){
-                        var baseURL = "https://storage.googleapis.com/livox-images/full/"
-                        //TODO Rich, add the queries to the database
-                        //TODO This should take in the list entity and give back the image name in the database
-                        mainActivity.setListEntityImage1(baseURL + "hot_dogs.png")//TODO replace with the image name
+                        val entityName1 = sendDatabaseQuery(listEntities[0])
+                        val cleanEntityName1 = entityName1.substring(1, entityName1.length - 2)
+                        mainActivity.setListEntityImage1(cleanEntityName1)
                         mainActivity.setListEntityText1(listEntities[0])
-                        mainActivity.setListEntityImage2(baseURL + "symbol00000997.png")//TODO replace with the image name
+
+                        val entityName2 = sendDatabaseQuery(listEntities[1])
+                        val cleanEntityName2 = entityName2.substring(1, entityName2.length - 2)
+                        mainActivity.setListEntityImage2(cleanEntityName2)
                         mainActivity.setListEntityText2(listEntities[1])
                     }
                 }
@@ -163,6 +173,31 @@ class QuestionManager(keyWord: String,
             }
         }
     }
+
+    fun sendDatabaseQuery(keyword: String):String{
+        val output = arrayOf<String>("")
+        val keywordURL = keyword.replace(" ", "%20")
+        val t = Thread(Runnable {
+            try {
+                val url = URL("http://api.axonbeats.com/image?keyword=" + keywordURL)
+                output[0] = Scanner(url.openStream(), "UTF-8").useDelimiter("\\A").next()
+                Log.d(TAG, output[0])
+            }catch(e: Exception){
+                Log.d(TAG, e.toString())
+            }
+        })
+
+        t.start()
+        try {
+            t.join()
+        } catch (e: Exception) {
+        }
+
+
+        return output[0]
+    }
+
+
 
     override fun onSpeechPartialResult(partialResult: String) {
         if (mHasKeywordBeenCalled) {

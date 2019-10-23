@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 
 public abstract class InvocationDetector extends ClassifierStep{
 
-	public InvocationDetector(ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
-		super(orchestrator, preprocessor);
+	public InvocationDetector(ListClassificationOrchestrator orchestrator) {
+		super(orchestrator);
 	}
 
 	public abstract int getStartIndex();

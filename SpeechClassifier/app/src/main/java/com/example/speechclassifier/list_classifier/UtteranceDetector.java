@@ -6,8 +6,8 @@ import java.util.List;
 public abstract class UtteranceDetector extends ClassifierStep{
 
 
-	public UtteranceDetector(ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
-		super(orchestrator, preprocessor);
+	public UtteranceDetector(ListClassificationOrchestrator orchestrator) {
+		super(orchestrator);
 	}
 
 	public abstract int getStartIndex();

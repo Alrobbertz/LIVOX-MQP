@@ -1,5 +1,7 @@
 package com.example.speechclassifier.list_classifier;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 /*
@@ -20,34 +22,43 @@ public class ListClassificationOrchestrator {
 	
 	//TODO each detector needs to take context from the previous. Make sure there are no overlaps in detection
 	//TODO throw errors instead of returning specific values
-	ListPreprocessor preprocessor;
 	WakewordDetector wwdetector;
 	LaunchDetector ldetector;
 	InvocationDetector idetector;
 	UtteranceDetector udetector;
-	Phrase recentPhrase;
+	public Phrase recentPhrase;
+	public int wwStart, lStart, iStart, uStart;
+
+	public String TAG = "SpeechRecognizerManager";
 	
 	public ListClassificationOrchestrator() {
-		preprocessor = new ListPreprocessor();
-		wwdetector = new WakewordDetectorImpl("John", this, preprocessor);
-		ldetector = new LaunchDetectorImpl(this, preprocessor);
-		idetector = new InvocationDetectorImpl(this, preprocessor);
-		udetector = new UtteranceDetectorImpl(this, preprocessor);
+		wwdetector = new WakewordDetectorImpl("John", this);
+		ldetector = new LaunchDetectorImpl(this);
+		idetector = new InvocationDetectorImpl(this);
+		udetector = new UtteranceDetectorOnline(this);
 	}
 	
 	public boolean classify(Phrase phrase) {
-		//make sure the preprocessor is correct
-		phrase.setPreprocessor(preprocessor);
-		
 		if(! wwdetector.classify(phrase))
 			return false;
-		if(! ldetector.classify(phrase))
+		Phrase wwPhrase = phrase.subPhrase(wwdetector.getWWIndex() + 1);
+		wwStart = wwdetector.getWWIndex();
+
+		if(! ldetector.classify(wwPhrase))
 			return false;
-		if(! idetector.classify(phrase))
+		Phrase lPhrase = wwPhrase.subPhrase(ldetector.getEndIndex() + 1);
+		lStart = wwStart + ldetector.getStartIndex() + 1;
+
+		if(! idetector.classify(lPhrase))
 			return false;
-		if(! udetector.classify(phrase))
+		Phrase iPhrase = lPhrase.subPhrase(idetector.getEndIndex() + 1);
+		iStart = lStart - ldetector.getStartIndex() + 1 + ldetector.getEndIndex() + idetector.getStartIndex();
+
+		if(! udetector.classify(iPhrase))
 			return false;
-		
+		Phrase uPhrase = iPhrase.subPhrase(udetector.getEndIndex() + 1);
+		uStart = iStart - idetector.getStartIndex() + 1 + idetector.getEndIndex() + udetector.getStartIndex();
+
 		//if successfully parsed, store this as the most recent phrase
 		recentPhrase = phrase;
 		return true;
@@ -61,13 +72,13 @@ public class ListClassificationOrchestrator {
 	public String getLaunch() {
 		int startIndex = ldetector.getStartIndex();
 		int endIndex = ldetector.getEndIndex();
-		return recentPhraseSubstring(startIndex, endIndex);
+		return recentPhraseSubstring(lStart, lStart + endIndex - startIndex);
 	}
 
 	public String getInvocation() {
 		int startIndex = idetector.getStartIndex();
 		int endIndex = idetector.getEndIndex();
-		return recentPhraseSubstring(startIndex, endIndex);
+		return recentPhraseSubstring(iStart, iStart + endIndex - startIndex);
 	}
 	
 	public String getIntent() {
@@ -77,10 +88,12 @@ public class ListClassificationOrchestrator {
 	public String getUtterance() {
 		int startIndex = udetector.getStartIndex();
 		int endIndex = udetector.getEndIndex();
-		return recentPhraseSubstring(startIndex, endIndex);
+		Log.d(TAG, startIndex + " " + endIndex + " " + uStart);
+		return recentPhraseSubstring(uStart, uStart + endIndex - startIndex);
 	}
 
 	public List<String> getListEntities(){
+		Log.d(TAG, "here");
 		return udetector.getUtteranceList();
 	}
 	

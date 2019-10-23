@@ -12,7 +12,7 @@ public class LaunchDetectorImpl extends LaunchDetector {
 		private void setupLaunchPhrases() {
 			launchPhrases = new ArrayList<Phrase>() {{
 				for(int i = 0; i < launchStrings.length; i++)
-					add(new Phrase(launchStrings[i], preprocessor));
+					add(new Phrase(launchStrings[i]));
 			}};
 		}
 
@@ -20,8 +20,8 @@ public class LaunchDetectorImpl extends LaunchDetector {
 		private boolean classified;
 		private int startIndex, endIndex; //both inclusive
 
-		public LaunchDetectorImpl(ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
-			super(orchestrator, preprocessor);
+		public LaunchDetectorImpl(ListClassificationOrchestrator orchestrator) {
+			super(orchestrator);
 			classified = false;
 			startIndex = -1;
 			endIndex = -1;

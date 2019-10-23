@@ -8,8 +8,8 @@ public class UtteranceDetectorImpl extends UtteranceDetector {
 	private boolean classified;
 	private int startIndex, endIndex; //both inclusive
 
-	public UtteranceDetectorImpl(ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
-		super(orchestrator, preprocessor);
+	public UtteranceDetectorImpl(ListClassificationOrchestrator orchestrator) {
+		super(orchestrator);
 		classified = false;
 		startIndex = -1;
 		endIndex = -1;
@@ -25,8 +25,7 @@ public class UtteranceDetectorImpl extends UtteranceDetector {
 	@Override
 	public boolean classify(Phrase phrase) {
 		clear();
-		String or = preprocessor.process("or");//honestly don't know if we need this.
-		int index = phrase.wordIndex(or);
+		int index = phrase.wordIndex("or");
 		if(index != phrase.size() - 1) {
 			classified = true;
 			startIndex = index - 1;
@@ -51,7 +50,7 @@ public class UtteranceDetectorImpl extends UtteranceDetector {
 	public List<String> getUtteranceList(){
 		ArrayList<String> utteranceList = new ArrayList<String>();
 		for(int i = startIndex; i<= endIndex; i++) {
-			utteranceList.add(orchestrator.recentPhrase.getWord(i));
+			utteranceList.add(orchestrator.recentPhrase.getWord(orchestrator.uStart + i));
 		}
 		utteranceList.remove(1);//remove the or
 		return utteranceList;

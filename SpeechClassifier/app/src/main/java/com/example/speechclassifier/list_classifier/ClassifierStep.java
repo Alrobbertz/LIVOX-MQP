@@ -3,11 +3,9 @@ package com.example.speechclassifier.list_classifier;
 public abstract class ClassifierStep {
 
 	ListClassificationOrchestrator orchestrator;
-	ListPreprocessor preprocessor;
-	
-	public ClassifierStep(ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
+
+	public ClassifierStep(ListClassificationOrchestrator orchestrator) {
 		this.orchestrator = orchestrator;
-		this.preprocessor = preprocessor;
 	}
 	
 	//sets internal state based on the given phrase

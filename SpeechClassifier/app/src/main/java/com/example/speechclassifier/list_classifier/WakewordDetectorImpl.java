@@ -7,9 +7,9 @@ public class WakewordDetectorImpl extends WakewordDetector {
 	private boolean classified;
 	private int index;
 	
-	public WakewordDetectorImpl(String wakeword, ListClassificationOrchestrator orchestrator, ListPreprocessor preprocessor) {
-		super(orchestrator, preprocessor);
-		this.wakeword = this.preprocessor.process(wakeword);
+	public WakewordDetectorImpl(String wakeword, ListClassificationOrchestrator orchestrator) {
+		super(orchestrator);
+		this.wakeword = Phrase.preprocessor.process(wakeword);
 		classified = false;
 		index = -1;
 	}

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.function.Function;
 
@@ -114,7 +115,13 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
             public void run() {
                 try {
                     URL url = new URL(imageURL);
-                    bmp[0] = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    //con.setRequestProperty("Content-Type", "application/json");
+                    con.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+                    con.setRequestProperty("Accept","*/*");
+                    con.setInstanceFollowRedirects(true);
+                    bmp[0] = BitmapFactory.decodeStream(con.getInputStream());
                 } catch (Exception e){}
             }
         });
@@ -143,7 +150,13 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
             public void run() {
                 try {
                     URL url = new URL(imageURL);
-                    bmp[0] = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    //con.setRequestProperty("Content-Type", "application/json");
+                    con.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+                    con.setRequestProperty("Accept","*/*");
+                    con.setInstanceFollowRedirects(true);
+                    bmp[0] = BitmapFactory.decodeStream(con.getInputStream());
                 } catch (Exception e){}
             }
         });

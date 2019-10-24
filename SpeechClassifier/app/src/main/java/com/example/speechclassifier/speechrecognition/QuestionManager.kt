@@ -180,7 +180,13 @@ class QuestionManager(keyWord: String,
         val t = Thread(Runnable {
             try {
                 val url = URL("http://api.axonbeats.com/image?keyword=" + keywordURL)
-                output[0] = Scanner(url.openStream(), "UTF-8").useDelimiter("\\A").next()
+                val con = url.openConnection() as HttpURLConnection
+                con.requestMethod = "GET"
+                //con.setRequestProperty("Content-Type", "application/json");
+                con.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ")
+                con.setRequestProperty("Accept", "*/*")
+                con.instanceFollowRedirects = true
+                output[0] = Scanner(con.inputStream, "UTF-8").useDelimiter("\\A").next()
                 Log.d(TAG, output[0])
             }catch(e: Exception){
                 Log.d(TAG, e.toString())

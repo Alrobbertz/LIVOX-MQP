@@ -2,6 +2,7 @@ package com.example.speechclassifier.list_classifier;
 
 import android.util.Log;
 
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +59,16 @@ public class UtteranceDetectorOnline extends UtteranceDetector {
         Thread t = new Thread(new Runnable(){
             public void run(){
                 try {
-                    URL url = new URL("http://api.axonbeats.com/entities?phrase=" + keywordURL + "&ngram=2");
-                    Log.d(TAG, url.toString());
-                    response[0] = new Scanner(url.openStream(), "UTF-8").useDelimiter("\\A").next();
+                    URL url = new URL("http://api.axonbeats.com/offline_entities?phrase=" + keywordURL + "&ngram=2");
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    //con.setRequestProperty("Content-Type", "application/json");
+                    con.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+                    con.setRequestProperty("Accept","*/*");
+                    con.setInstanceFollowRedirects(true);
+
+                    Log.d(TAG, "URL: " + con.toString());
+                    response[0] = new Scanner(con.getInputStream(), "UTF-8").useDelimiter("\\A").next();
                     Log.d(TAG, response[0]);
                 } catch (Exception e) {
                     Log.d(TAG, e.toString());

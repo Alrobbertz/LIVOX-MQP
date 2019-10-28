@@ -6,7 +6,8 @@ public class LaunchDetectorImpl extends LaunchDetector {
 	//initialize the launchPhrases
 		private String[] launchStrings  = {
 				"what do you want",
-				"what would you like"
+				"what would you like",
+				"do you want"
 		};
 		private ArrayList<Phrase> launchPhrases;
 		private void setupLaunchPhrases() {
@@ -20,8 +21,7 @@ public class LaunchDetectorImpl extends LaunchDetector {
 		private boolean classified;
 		private int startIndex, endIndex; //both inclusive
 
-		public LaunchDetectorImpl(ListClassificationOrchestrator orchestrator) {
-			super(orchestrator);
+		public LaunchDetectorImpl() {
 			classified = false;
 			startIndex = -1;
 			endIndex = -1;

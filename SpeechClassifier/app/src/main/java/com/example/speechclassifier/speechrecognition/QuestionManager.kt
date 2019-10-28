@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Handler
 import android.util.Log
 import com.example.speechclassifier.MainActivity
+import com.example.speechclassifier.WebAPIHelper
 import java.util.*
 import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator
 import com.example.speechclassifier.list_classifier.Phrase
@@ -122,13 +123,15 @@ class QuestionManager(keyWord: String,
 
             if(isSentenceNotEmpty && !isSentenceOnlyKeyword){
                 // Play notification sound cause sentence with a trigger has been found
-                //playNotificationSound(mCanPlaySound)
+                playNotificationSound(mCanPlaySound)
                 // Get the question type
 
                 val filteredPhrase = Phrase(filteredResult.originalResult)
                 val success = orchestrator.classify(filteredPhrase)
                 if (!success) {
                     Log.d(TAG, "Unsuccessful at parsing sentence")
+                    // Start Listening again
+                    speechRecognizerHelper.listenAgain(false)
                 }
                 else{
                     Log.d(TAG, "" + orchestrator.wwStart + " " + orchestrator.lStart + " " + orchestrator.iStart + " " + orchestrator.uStart)
@@ -141,14 +144,12 @@ class QuestionManager(keyWord: String,
                     var listEntities: List<String> = orchestrator.listEntities
                     Log.d(TAG, listEntities.toString())
                     if(listEntities.size == 2){
-                        val entityName1 = sendDatabaseQuery(listEntities[0])
-                        val cleanEntityName1 = entityName1.substring(1, entityName1.length - 2)
-                        mainActivity.setListEntityImage1(cleanEntityName1)
+                        val entityName1 = WebAPIHelper.getRelevantImage(listEntities[0])
+                        mainActivity.setListEntityImage1(entityName1)
                         mainActivity.setListEntityText1(listEntities[0])
 
-                        val entityName2 = sendDatabaseQuery(listEntities[1])
-                        val cleanEntityName2 = entityName2.substring(1, entityName2.length - 2)
-                        mainActivity.setListEntityImage2(cleanEntityName2)
+                        val entityName2 = WebAPIHelper.getRelevantImage(listEntities[1])
+                        mainActivity.setListEntityImage2(entityName2)
                         mainActivity.setListEntityText2(listEntities[1])
                     }
                 }
@@ -157,6 +158,10 @@ class QuestionManager(keyWord: String,
                 mHasKeywordBeenCalled = false
                 // Launch callback to send filtered results
                 mCallback.onQuestionFound(filteredResult)
+
+                //found a valid phrase stop listening
+                stopListeningForKeyword();
+
             } else {
                 Log.d(TAG, "ON SPEECH RESULTS LISTEN AGAIN")
                 // Start Listening again
@@ -173,37 +178,6 @@ class QuestionManager(keyWord: String,
             }
         }
     }
-
-    fun sendDatabaseQuery(keyword: String):String{
-        val output = arrayOf<String>("")
-        val keywordURL = keyword.replace(" ", "%20")
-        val t = Thread(Runnable {
-            try {
-                val url = URL("http://api.axonbeats.com/image?keyword=" + keywordURL)
-                val con = url.openConnection() as HttpURLConnection
-                con.requestMethod = "GET"
-                //con.setRequestProperty("Content-Type", "application/json");
-                con.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ")
-                con.setRequestProperty("Accept", "*/*")
-                con.instanceFollowRedirects = true
-                output[0] = Scanner(con.inputStream, "UTF-8").useDelimiter("\\A").next()
-                Log.d(TAG, output[0])
-            }catch(e: Exception){
-                Log.d(TAG, e.toString())
-            }
-        })
-
-        t.start()
-        try {
-            t.join()
-        } catch (e: Exception) {
-        }
-
-
-        return output[0]
-    }
-
-
 
     override fun onSpeechPartialResult(partialResult: String) {
         if (mHasKeywordBeenCalled) {

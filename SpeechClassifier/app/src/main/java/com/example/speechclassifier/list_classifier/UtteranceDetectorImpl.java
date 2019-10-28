@@ -6,11 +6,12 @@ import java.util.List;
 public class UtteranceDetectorImpl extends UtteranceDetector {
 	//private attributes
 	private boolean classified;
+	private Phrase recentPhrase;
 	private int startIndex, endIndex; //both inclusive
 
-	public UtteranceDetectorImpl(ListClassificationOrchestrator orchestrator) {
-		super(orchestrator);
+	public UtteranceDetectorImpl() {
 		classified = false;
+		recentPhrase = null;
 		startIndex = -1;
 		endIndex = -1;
 	}
@@ -18,6 +19,7 @@ public class UtteranceDetectorImpl extends UtteranceDetector {
 	@Override
 	public void clear() {
 		classified = false;
+		recentPhrase = null;
 		startIndex = -1;
 		endIndex = -1;
 	}
@@ -30,6 +32,7 @@ public class UtteranceDetectorImpl extends UtteranceDetector {
 			classified = true;
 			startIndex = index - 1;
 			endIndex = index + 1;
+			recentPhrase = phrase;
 			return true;
 		}
 		return false;
@@ -50,7 +53,7 @@ public class UtteranceDetectorImpl extends UtteranceDetector {
 	public List<String> getUtteranceList(){
 		ArrayList<String> utteranceList = new ArrayList<String>();
 		for(int i = startIndex; i<= endIndex; i++) {
-			utteranceList.add(orchestrator.recentPhrase.getWord(orchestrator.uStart + i));
+			utteranceList.add(recentPhrase.getWord(i));//TODO double check this still works
 		}
 		utteranceList.remove(1);//remove the or
 		return utteranceList;

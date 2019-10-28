@@ -5,9 +5,7 @@ import java.util.List;
 
 public abstract class LaunchDetector extends ClassifierStep{
 
-	public LaunchDetector(ListClassificationOrchestrator orchestrator) {
-		super(orchestrator);
-	}
+	public LaunchDetector() {}
 
 	public abstract int getStartIndex();
 

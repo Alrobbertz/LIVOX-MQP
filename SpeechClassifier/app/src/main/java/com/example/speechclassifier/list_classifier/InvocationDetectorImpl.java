@@ -23,8 +23,7 @@ public class InvocationDetectorImpl extends InvocationDetector {
 	private int startIndex, endIndex; //both inclusive
 	private String intent;
 
-	public InvocationDetectorImpl(ListClassificationOrchestrator orchestrator) {
-		super(orchestrator);
+	public InvocationDetectorImpl() {
 		classified = false;
 		startIndex = -1;
 		endIndex = -1;

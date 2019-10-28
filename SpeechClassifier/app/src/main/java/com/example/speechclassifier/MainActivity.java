@@ -1,12 +1,16 @@
 package com.example.speechclassifier;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+
 import com.example.speechclassifier.speechrecognition.QuestionManager.KeywordManagerCallback;
 import com.example.speechclassifier.speechrecognition.FilteredResult;
 import com.example.speechclassifier.speechrecognition.QuestionManager;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,7 +39,9 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
     private ImageView listEntityImage2;
     private TextView listEntityText2;
 
+    QuestionManager mQuestionManager;
 
+    private Drawable defaultImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         invocationPhrase = rootView.findViewById(R.id.invocation_phrase);
         listEntityPhrase = rootView.findViewById(R.id.list_entity_phrase);
 
+        Resources res = getResources();
+        defaultImage = ResourcesCompat.getDrawable(res, R.drawable.pasta, null);
 
         // init of text fields
         setFullPhrase("");
@@ -83,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         //int liteBlueColor = ContextCompat.getColor(this, R.color.lite_blue);
         //mMainLayout.setBackgroundColor(liteBlueColor);
 
-        QuestionManager mQuestionManager = new QuestionManager(mKeyword, languageTag, this, keywordSoundUri, this, this);
+        mQuestionManager = new QuestionManager(mKeyword, languageTag, this, keywordSoundUri, this, this);
         mQuestionManager.startListeningForKeyword();
         String keyword = mKeyword; //LivoxSettings.getNaturalConversationKeyword(this, mUserId);
         Log.d(TAG,  "Listening for KEYWORD " + keyword);
@@ -108,33 +116,12 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
     }
 
     public void setListEntityImage1(String imageURL) {
-        Bitmap[] bmp = {null};
-
-        Thread t = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("GET");
-                    //con.setRequestProperty("Content-Type", "application/json");
-                    con.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-                    con.setRequestProperty("Accept","*/*");
-                    con.setInstanceFollowRedirects(true);
-                    bmp[0] = BitmapFactory.decodeStream(con.getInputStream());
-                } catch (Exception e){}
-            }
-        });
-
-        t.start();
-        try {
-            t.join();
-        }catch(Exception e){}
-
-        if(bmp[0] != null){
-            this.listEntityImage1.setImageBitmap(bmp[0]);
-        }else{
-            Log.d(TAG, "trying to load null image");
+        Bitmap image = WebAPIHelper.getImage(imageURL);
+        if(image == null){
+            this.listEntityImage1.setImageDrawable(defaultImage);
+        }
+        else{
+            this.listEntityImage1.setImageBitmap(image);
         }
     }
 
@@ -143,38 +130,24 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
     }
 
     public void setListEntityImage2(String imageURL) {
-        Bitmap[] bmp = {null};
-
-        Thread t = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("GET");
-                    //con.setRequestProperty("Content-Type", "application/json");
-                    con.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-                    con.setRequestProperty("Accept","*/*");
-                    con.setInstanceFollowRedirects(true);
-                    bmp[0] = BitmapFactory.decodeStream(con.getInputStream());
-                } catch (Exception e){}
-            }
-        });
-
-        t.start();
-        try {
-            t.join();
-        }catch(Exception e){}
-
-        if(bmp[0] != null){
-            this.listEntityImage2.setImageBitmap(bmp[0]);
-        }else{
-            Log.d(TAG, "trying to load null image");
+        Bitmap image = WebAPIHelper.getImage(imageURL);
+        if(image == null){
+            this.listEntityImage2.setImageDrawable(defaultImage);
         }
-
+        else{
+            this.listEntityImage2.setImageBitmap(image);
+        }
     }
 
     public void setListEntityText2(String listEntityText2) {
         this.listEntityText2.setText(listEntityText2);
+    }
+
+    public void startListening(View view){
+        mQuestionManager.startListeningForKeyword();
+    }
+
+    public void stopListening(View view){
+        mQuestionManager.stopListeningForKeyword();
     }
 }

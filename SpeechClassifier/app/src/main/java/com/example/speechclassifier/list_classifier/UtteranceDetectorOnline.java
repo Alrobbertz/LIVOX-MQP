@@ -1,6 +1,10 @@
 package com.example.speechclassifier.list_classifier;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.example.speechclassifier.WebAPIHelper;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,8 +21,7 @@ public class UtteranceDetectorOnline extends UtteranceDetector {
     List<Phrase> tokens;
     Phrase recentPhrase;
 
-    public UtteranceDetectorOnline(ListClassificationOrchestrator orchestrator) {
-        super(orchestrator);
+    public UtteranceDetectorOnline() {
         tokens = null;
     }
 
@@ -43,55 +46,17 @@ public class UtteranceDetectorOnline extends UtteranceDetector {
     }
 
     public boolean classify(Phrase phrase) {
-        List<String> response = apiResolver(phrase.toString());
+        List<String> response = WebAPIHelper.getListEntities(phrase.toString());
+        if(response.size() == 0){// if size of 0 then it automatically fails bc it didn't parse any list entities
+            return false;
+        }
+
         tokens = new ArrayList<Phrase>(){{
            for(String s: response)
                add(new Phrase(s));
         }};
         recentPhrase = phrase;
         return true;
-    }
-
-    public List<String> apiResolver(String utterance){
-        Log.d(TAG, "resolver.start");
-        String[] response = new String[1];
-        String keywordURL = utterance.replace(" ", "%20");
-        Thread t = new Thread(new Runnable(){
-            public void run(){
-                try {
-                    URL url = new URL("http://api.axonbeats.com/offline_entities?phrase=" + keywordURL + "&ngram=2");
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("GET");
-                    //con.setRequestProperty("Content-Type", "application/json");
-                    con.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-                    con.setRequestProperty("Accept","*/*");
-                    con.setInstanceFollowRedirects(true);
-
-                    Log.d(TAG, "URL: " + con.toString());
-                    response[0] = new Scanner(con.getInputStream(), "UTF-8").useDelimiter("\\A").next();
-                    Log.d(TAG, response[0]);
-                } catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                }
-            }
-
-        });
-
-        t.start();
-        try {
-            t.join();
-        } catch (Exception e) {}
-
-        List<String> allMatches = new ArrayList<String>();
-        Matcher m = Pattern.compile("\"[^,]*\"").matcher(response[0]);
-        while (m.find()) {
-            String currentMatch = m.group();
-            currentMatch = currentMatch.substring(1, currentMatch.length() - 1);
-            allMatches.add(currentMatch);
-            Log.d(TAG, currentMatch);
-        }
-
-        return allMatches;
     }
 
 }

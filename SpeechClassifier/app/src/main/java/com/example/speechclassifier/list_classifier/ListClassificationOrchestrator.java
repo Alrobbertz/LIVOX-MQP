@@ -32,10 +32,10 @@ public class ListClassificationOrchestrator {
 	public String TAG = "SpeechRecognizerManager";
 	
 	public ListClassificationOrchestrator() {
-		wwdetector = new WakewordDetectorImpl("John", this);
-		ldetector = new LaunchDetectorImpl(this);
-		idetector = new InvocationDetectorImpl(this);
-		udetector = new UtteranceDetectorOnline(this);
+		wwdetector = new WakewordDetectorImpl("John");
+		ldetector = new LaunchDetectorImpl();
+		idetector = new InvocationDetectorImpl();
+		udetector = new UtteranceDetectorOnline();
 	}
 	
 	public boolean classify(Phrase phrase) {

@@ -141,16 +141,14 @@ class QuestionManager(keyWord: String,
                     mainActivity.setListEntityPhrase(orchestrator.utterance)
 
                     //TODO add images
+                    mainActivity.resetEntities()
                     var listEntities: List<String> = orchestrator.listEntities
                     Log.d(TAG, listEntities.toString())
-                    if(listEntities.size == 2){
-                        val entityName1 = WebAPIHelper.getRelevantImage(listEntities[0])
-                        mainActivity.setListEntityImage1(entityName1)
-                        mainActivity.setListEntityText1(listEntities[0])
-
-                        val entityName2 = WebAPIHelper.getRelevantImage(listEntities[1])
-                        mainActivity.setListEntityImage2(entityName2)
-                        mainActivity.setListEntityText2(listEntities[1])
+                    //TODO fix this shit
+                    for (s in listEntities) {
+                        val imageURL = WebAPIHelper.getRelevantImage(s)
+                        val image = WebAPIHelper.getImage(imageURL)
+                        mainActivity.addListEntity(image, s)
                     }
                 }
                 //filteredResult.questionType = QuestionClassifier.getQuestionType(mContext, livoxNowHelper, filteredResult)

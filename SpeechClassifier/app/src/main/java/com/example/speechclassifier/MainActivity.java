@@ -18,10 +18,12 @@ import android.util.Log;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.function.Function;
 
 
@@ -34,12 +36,9 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
     private TextView invocationPhrase;
     private TextView listEntityPhrase;
 
-    private ImageView listEntityImage1;
-    private TextView listEntityText1;
-    private ImageView listEntityImage2;
-    private TextView listEntityText2;
-
     QuestionManager mQuestionManager;
+
+    private LinearLayout listEntities;
 
     private Drawable defaultImage;
 
@@ -49,10 +48,6 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         setContentView(R.layout.activity_main);
 
         View rootView = findViewById(R.id.layout);
-        listEntityImage1 = rootView.findViewById(R.id.entity_1_image);
-        listEntityText1 = rootView.findViewById(R.id.entity_1_text);
-        listEntityImage2 = rootView.findViewById(R.id.entity_2_image);
-        listEntityText2 = rootView.findViewById(R.id.entity_2_text);
 
         fullPhrase = rootView.findViewById(R.id.full_phrase);
         launchPhrase = rootView.findViewById(R.id.launch_phrase);
@@ -62,17 +57,13 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         Resources res = getResources();
         defaultImage = ResourcesCompat.getDrawable(res, R.drawable.pasta, null);
 
+        listEntities = rootView.findViewById(R.id.list_entity_layout);
+
         // init of text fields
         setFullPhrase("");
         setInitiatorPhrase("");
         setInvocationPhrase("");
         setListEntityPhrase("");
-
-        //init of list entities and associated image
-        setListEntityText1("");
-
-        setListEntityText2("");
-        //setListEntityImage2();
 
         initNaturalConversation();
     }
@@ -115,39 +106,23 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         this.listEntityPhrase.setText("List Phrase: " + listEntityPhrase);
     }
 
-    public void setListEntityImage1(String imageURL) {
-        Bitmap image = WebAPIHelper.getImage(imageURL);
-        if(image == null){
-            this.listEntityImage1.setImageDrawable(defaultImage);
-        }
-        else{
-            this.listEntityImage1.setImageBitmap(image);
-        }
-    }
-
-    public void setListEntityText1(String listEntityText1) {
-        this.listEntityText1.setText(listEntityText1);
-    }
-
-    public void setListEntityImage2(String imageURL) {
-        Bitmap image = WebAPIHelper.getImage(imageURL);
-        if(image == null){
-            this.listEntityImage2.setImageDrawable(defaultImage);
-        }
-        else{
-            this.listEntityImage2.setImageBitmap(image);
-        }
-    }
-
-    public void setListEntityText2(String listEntityText2) {
-        this.listEntityText2.setText(listEntityText2);
-    }
-
     public void startListening(View view){
         mQuestionManager.startListeningForKeyword();
     }
 
     public void stopListening(View view){
         mQuestionManager.stopListeningForKeyword();
+    }
+
+    public void addListEntity(Bitmap image, String entityName){
+        ListEntity newListEntity = new ListEntity(this);
+        newListEntity.setImage(image);
+        newListEntity.setText(entityName);
+
+        listEntities.addView(newListEntity);
+    }
+
+    public void resetEntities(){
+        listEntities.removeAllViews();
     }
 }

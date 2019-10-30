@@ -15,6 +15,7 @@ public class InvocationDetectorImpl extends InvocationDetector {
 			put(new Phrase("to have for lunch"), "lunch");
 			put(new Phrase("for lunch"), "lunch");
 			put(new Phrase("to eat for lunch"), "lunch");
+			put(new Phrase("favorite color"), "");
 		}};
 	}
 

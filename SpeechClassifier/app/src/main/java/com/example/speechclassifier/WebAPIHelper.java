@@ -28,7 +28,7 @@ public class WebAPIHelper {
 
         HashMap<String, String> params = new HashMap<String,String>();
         params.put("phrase", utterance);
-        params.put("ngram", "2");
+        params.put("ngram", "3");
         InputStream response = get("http://api.axonbeats.com/offline_entities", params);
         if(response == null){//exception thrown during web request
             //TODO handle this better

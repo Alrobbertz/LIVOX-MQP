@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    tools:context=".ListEntity">
+    tools:context=".ListEntity"
+    android:background="@drawable/border">
 
     <ImageView
         android:id="@+id/image_1"

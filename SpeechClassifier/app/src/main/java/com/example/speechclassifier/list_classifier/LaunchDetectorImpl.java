@@ -7,7 +7,8 @@ public class LaunchDetectorImpl extends LaunchDetector {
 		private String[] launchStrings  = {
 				"what do you want",
 				"what would you like",
-				"do you want"
+				"do you want",
+				"what is your"
 		};
 		private ArrayList<Phrase> launchPhrases;
 		private void setupLaunchPhrases() {

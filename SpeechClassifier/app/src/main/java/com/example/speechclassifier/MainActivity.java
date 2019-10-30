@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         ListEntity newListEntity = new ListEntity(this);
         newListEntity.setImage(image);
         newListEntity.setText(entityName);
+        newListEntity.setLayoutParams(new ListEntity.LayoutParams(200, 300));
 
         listEntities.addView(newListEntity);
     }

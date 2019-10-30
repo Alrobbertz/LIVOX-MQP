@@ -1,0 +1,287 @@
+Question,Class
+When was the first Crip gang started?,NUM
+What does the name mean or come from?,DESC
+Which cities have Crip gangs?,LOC
+What ethnic group/race are Crip members?,DESC
+What is their gang color?,DESC
+What is the name of Durst's group?,ENTY
+What record company is he with?,ENTY
+What are titles of the group's releases?,DESC
+Where was Durst born?,LOC
+When was the comet discovered?,NUM
+How often does it approach the earth?,NUM
+In what countries was the comet visible on its last return?,LOC
+When was James Dean born?,NUM
+When did James Dean die?,NUM
+How did he die?,DESC
+What movies did he appear in?,ENTY
+Which was the first movie that he was in?,ENTY
+What does AARP stand for?,DESC
+When was the organization started?,NUM
+Where is its headquarters?,LOC
+Who is its top official or CEO?,HUM
+What companies has AARP endorsed?,ENTY
+How long does one study as a Rhodes scholar?,NUM
+Where do Rhodes scholars study?,LOC
+Name famous people who have been Rhodes scholars.,ENTY
+What countries have Rhodes scholars come from?,LOC
+What kind of animal is an agouti?,DESC
+What is their average life span?,NUM
+In what countries are they found?,LOC
+Who founded the Black Panthers organization?,HUM
+When was it founded?,NUM
+Where was it founded?,LOC
+Who have been members of the organization?,HUM
+Who are the members of this group?,HUM
+What albums have they made?,ENTY
+What is their style of music?,DESC
+What is their biggest hit?,ENTY
+What are prions made of?,DESC
+Who discovered prions?,HUM
+What diseases are prions associated with?,ENTY
+What researchers have worked with prions?,HUM
+Who is the lead singer/musician in Nirvana?,HUM
+Who are the band members?,HUM
+When was the band formed?,NUM
+What is their biggest hit?,ENTY
+What are their albums?,ENTY
+What style of music do they play?,DESC
+What industry is Rohm and Haas in?,DESC
+Where is the company located?,LOC
+What is their annual revenue?,NUM
+How many employees does it have?,NUM
+What film introduced Jar Jar Binks?,ENTY
+What actor is used as his voice?,HUM
+To what alien race does he belong?,ENTY
+Horus is the god of what?,ENTY
+What country is he associated with?,LOC
+Who was his mother?,HUM
+Who was his father?,HUM
+Who are the members of the Rat Pack?,HUM
+Who coined the name?,HUM
+What Las Vegas hotel was made famous by the Rat Pack?,ENTY
+What is the primary symptom of a cataract?,DESC
+How are they treated?,DESC
+Who are doctors that have performed cataract surgery?,HUM
+When was the court established?,NUM
+What kind of cases does it try?,DESC
+Who is the sponsor of the court?,HUM
+How many justices are members of the court?,NUM
+What division (weight) did he win?,NUM
+When did he win the title?,NUM
+How old was he when he won the title?,NUM
+Who did he beat to win the title?,HUM
+Who beat him to take the title away?,HUM
+List the names of boxers he fought.,HUM
+What kind of a community is a Kibbutz?,DESC
+With what country are they associated?,LOC
+When was the first Kibbutz founded?,NUM
+Where was the first Kibbutz founded?,LOC
+How many are there now?,NUM
+In what year did the first Concorde passenger flight take place?,NUM
+What airlines have Concordes in their fleets?,ENTY
+How many seats are in the cabin of a Concorde?,NUM
+How fast does the Concorde fly?,NUM
+What year was the first Concorde crash?,NUM
+How many Club Med vacation spots are there worldwide?,NUM
+List the spots in the United States.,LOC
+Where is an adults-only Club Med?,LOC
+Where was Franz Kafka born?,LOC
+When was he born?,NUM
+What is his ethnic background?,DESC
+What books did he author?,ENTY
+In what film is Gordon Gekko the main character?,ENTY
+Who plays the role?,HUM
+What year was the movie released?,NUM
+What was Gekko's profession?,DESC
+When was he born?,NUM
+What nationality is he?,DESC
+Where did he study architecture?,LOC
+What prizes or awards has he won?,ENTY
+What buildings has he designed?,ENTY
+What sport do they play?,ENTY
+When were they founded?,NUM
+By whom were they founded?,HUM
+What countries have they played in?,LOC
+What kind of singer is Ice-T?,DESC
+What was his original name?,HUM
+When was he born?,NUM
+Where was he born?,LOC
+What are names of his albums?,ENTY
+What sport does Jennifer Capriati play?,ENTY
+Who is her coach?,HUM
+Where does she live?,LOC
+When was she born?,NUM
+What kind of business is Abercrombie and Fitch?,DESC
+When was it established?,NUM
+Where was it established?,LOC
+How many stores are there?,NUM
+Why is the 'Tale of Genji' famous?,DESC
+Who wrote it?,HUM
+When was it written?,NUM
+What is Al Jolson's real name?,HUM
+What is his nationality?,DESC
+Where was he born?,LOC
+Who did he marry?,HUM
+What songs did he sing?,ENTY
+What was Jean Harlow's real name?,HUM
+Where was she born?,LOC
+When did she die?,NUM
+How old was she when she died?,NUM
+What did she die of?,DESC
+Where is she buried?,LOC
+What movies did she appear in?,ENTY
+What leading men did she star opposite of?,HUM
+What do practitioners of Wicca worship?,DESC
+How many followers does it have?,NUM
+Who is its leader?,HUM
+What festivals does it have?,DESC
+What is Florence Nightingale famous for?,DESC
+When was she born?,NUM
+Where was she born?,LOC
+When did she die?,NUM
+When did Amtrak begin operations?,NUM
+How many passengers does it serve annually?,NUM
+How many employees does it have?,NUM
+Who is the president or chief executive of Amtrak?,HUM
+Name cities that have an Amtrak terminal.,LOC
+When did Jack Welch become chairman of General Electric?,NUM
+How many years was he with GE?,NUM
+When did he retire from GE?,NUM
+How many people did he fire from GE?,NUM
+In what country did this movement take place?,LOC
+When did the Khmer Rouge come into power?,NUM
+Who was its first leader?,HUM
+Who were leaders of the Khmer Rouge?,HUM
+When was the Khmer Rouge removed from power?,NUM
+How many members are there in the singing group the Wiggles?,NUM
+Who are the members' names?,HUM
+Where is the group from?,LOC
+List the Wiggles' songs.,ENTY
+What kind of a particle is a quark?,DESC
+Who discovered quarks?,HUM
+When were they discovered?,NUM
+What are the different types of quarks?,ENTY
+What kind of music does the band play?,DESC
+In what year was their first major album recorded?,NUM
+Name their songs.,ENTY
+When was Nimitz born?,NUM
+What town was he native of?,LOC
+What branch of the military did he serve in?,ENTY
+During what war did he serve?,ENTY
+What rank did he reach?,ENTY
+What year did the Teapot Dome scandal take place?,NUM
+Who was President of the United States at the time?,HUM
+What was the main focus of the scandal?,DESC
+Who were the major players involved in the scandal?,HUM
+When was the USS Constitution commissioned?,NUM
+What conflict did she distinguish herself in?,DESC
+How many battles did she win?,NUM
+What is her nickname?,HUM
+Who established the awards?,HUM
+What are the different categories of Nobel prizes?,ENTY
+When were the awards first given?,NUM
+What is the monetary value of the prize?,NUM
+What tribe did Sacajawea belong to?,ENTY
+What years did she accompany Lewis and Clark on their expedition?,NUM
+When was she born?,NUM
+When did she die?,NUM
+Where is she buried?,LOC
+How much is the Sacajawea coin worth?,NUM
+When was the IFC established?,NUM
+What is its mission?,DESC
+What countries has the IFC financed projects in?,LOC
+Who was the leader of the cult?,HUM
+How many of its members committed suicide?,NUM
+When did the mass suicide occur?,NUM
+Where did it occur?,LOC
+How did they commit suicide?,DESC
+Why did they commit suicide?,DESC
+On what date was Bashar Assad inaugurated as the Syrian president?,LOC
+What is his party affiliation?,ENTY
+What was his profession prior to assuming the Presidency?,DESC
+How long are Syrian presidential terms?,NUM
+What schools did he attend?,ENTY
+When was Abu Nidal born?,NUM
+What was his name at birth?,HUM
+How many followers does he have?,NUM
+In what countries has he operated from?,LOC
+In what year did the PLO condemn him to death?,NUM
+What is Carlos' real name?,HUM
+Where was he born?,LOC
+Whom did he marry?,HUM
+When was he captured?,NUM
+Where was he captured?,LOC
+When was Cassini launched?,NUM
+How much did it cost to build?,NUM
+What is its destination?,LOC
+What planets will it pass?,ENTY
+What is the religious affiliation of the Kurds?,DESC
+How many Kurds live in Turkey?,NUM
+What other countries do Kurds live in?,LOC
+When was the first Burger King restaurant opened?,NUM
+Where was the first restaurant opened?,LOC
+Who founded it?,HUM
+What are Burger King's gross sales today?,NUM
+What countries is Burger King located in?,LOC
+Who is the CEO of the publishing company Conde Nast?,HUM
+Where are the company's headquarters?,LOC
+When was the company founded?,NUM
+What magazines does Conde Nast publish?,ENTY
+Where was she born?,LOC
+How many siblings does she have?,NUM
+Whom did she marry?,HUM
+How many children does she have?,NUM
+Where does she live?,LOC
+What schools did she attend?,ENTY
+What is her occupation?,DESC
+What branch of the service did she serve in?,ENTY
+What rank did she reach?,ENTY
+Where was he born?,LOC
+When was he born?,NUM
+How old was he when he began writing?,NUM
+What books has he written?,ENTY
+When was the agreement made?,NUM
+What is the purpose of the agreement?,DESC
+What groups are affected by it?,ENTY
+Who were the key players in negotiating the agreement?,HUM
+What kind of ship is the Liberty Bell 7?,DESC
+Who developed it?,HUM
+What is it made of?,DESC
+What happened to it?,DESC
+What is Vilar's nationality?,DESC
+What organizations has he donated money to?,ENTY
+What is the name of the company he founded?,ENTY
+What companies has he invested in?,ENTY
+Who founded Public Citizen?,HUM
+When was it formed?,NUM
+What is its purpose?,DESC
+How many members does it have?,NUM
+Who is its current head?,HUM
+What state does he represent?,LOC
+When was he born?,NUM
+When was he first elected to the senate?,NUM
+What branch of the service did he serve in?,ENTY
+Who founded the Muslim Brotherhood?,HUM
+When was it formed?,NUM
+What is its goal?,DESC
+What countries does it operate in?,LOC
+Name members of the group.,HUM
+Where is the center located?,LOC
+When was the center formed?,NUM
+What is its mission?,DESC
+Name members of the center.,HUM
+What kind of insect is a boll weevil?,ENTY
+What type of plant does it damage?,ENTY
+What states have had problems with boll weevils?,LOC
+What was Johnny Appleseed's real name?,HUM
+Where was he born?,LOC
+When did he die?,NUM
+What did he wear as a hat?,ENTY
+In what states did he plant trees?,LOC
+What are the names of the space shuttles?,DESC
+Which was the first shuttle?,ENTY
+When was the first flight?,NUM
+When was the Challenger space shuttle disaster?,NUM
+How many members were in the crew of the Challenger?,NUM
+How long did the Challenger flight last before it exploded?,DESC

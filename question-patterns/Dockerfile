@@ -8,7 +8,7 @@ RUN apt-get install -y python3 \
 
 RUN pip3 install scikit-learn pandas matplotlib numpy
 
-COPY ./*.csv /questions/
-COPY ./*.py /questions/
+COPY ./* /questions/
+COPY ./intent/* /questions/intent/
 
-ENTRYPOINT [ "python3", "/questions/dt.py" ]
+ENTRYPOINT [ "python3", "/questions/intent/intent.py" ]

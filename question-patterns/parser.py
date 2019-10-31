@@ -118,10 +118,17 @@ def write_to_csv(filename, questions, labels):
 
 # Write a main
 def main():
-    q_04 = load_from_xml()
-    clean_04, labels = clean_and_label(q_04)
-    write_to_csv("questions04.csv", q_04, labels)
-    count_classes(q_04, labels)
+    questions = []
+    questions.extend(load_from_xml())
+    questions.extend(load_from_text(reg_03, 'QA2003.txt'))
+    questions.extend(load_from_text(reg_02_99, 'QA2002.txt'))
+    questions.extend(load_from_text(reg_02_99, 'QA2001.txt'))
+    questions.extend(load_from_text(reg_02_99, 'QA2000.txt'))
+    questions.extend(load_from_text(reg_02_99, 'QA1999.txt'))
+    clean_questions, labels = clean_and_label(questions)
+    write_to_csv("questions.csv", questions, labels)
+    print(len(questions))
+    count_classes(questions, labels)
 
 
 if __name__ == '__main__':

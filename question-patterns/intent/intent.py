@@ -20,19 +20,21 @@ from sklearn.model_selection import cross_val_score
 
 
 # Load the CSV
-df = pd.read_csv('/questions/questions.csv')
+df = pd.read_csv('/questions/intent/Question_Classification_Dataset.csv')
 df.head()
 
 
 # Define the Columns
-col = ['Question', 'Class']
+col = ['Questions', 'Category0', 'Category1', 'Category2']
 df = df[col]
 
 # Get Rid of null values
-df = df[pd.notnull(df['Question'])]
-df.columns = ['Question', 'Class']
+df = df[pd.notnull(df['Questions'])]
+df.columns = ['Questions', 'Category0', 'Category1', 'Category2']
 
 # Generate Int values for Class categories as new column in frame
+#df['Class']= df.apply(lambda x:'%s_%s' % (x['Category1'],x['Category2']), axis=1)
+df['Class'] = df['Category0']
 df['category_id'] = df['Class'].factorize()[0]
 
 # Generate some dictionaries?
@@ -42,28 +44,28 @@ id_to_category = dict(category_id_df[['category_id', 'Class']].values)
 df.head()
 
 print("== Class Balances ==")
-print(df.groupby('Class').Question.count())
+print(df.groupby('Class').Questions.count())
 
 # Do TF-IDF Vectorization, Set features, labels
-tfidf = TfidfVectorizer(sublinear_tf=True, min_df=1, norm='l2', encoding='latin-1', ngram_range=(1, 3), stop_words='english')
-features = tfidf.fit_transform(df.Question).toarray()
+tfidf = TfidfVectorizer(sublinear_tf=True, min_df=1, norm='l2', encoding='latin-1', ngram_range=(1, 2), stop_words='english')
+features = tfidf.fit_transform(df.Questions).toarray()
 labels = df.category_id
 print(features.shape)
 
 
 # Chi^2 to find term most related with Classes
-N = 5
-for Class, category_id in sorted(category_to_id.items()):
-  features_chi2 = chi2(features, labels == category_id)
-  indices = np.argsort(features_chi2[0])
-  feature_names = np.array(tfidf.get_feature_names())[indices]
-  unigrams = [v for v in feature_names if len(v.split(' ')) == 1]
-  bigrams = [v for v in feature_names if len(v.split(' ')) == 2]
-  trigrams = [v for v in feature_names if len(v.split(' ')) == 3]
-  print("# '{}':".format(Class))
-  print("  . Most correlated unigrams:\n. {}".format('\n. '.join(unigrams[-N:])))
-  print("  . Most correlated bigrams:\n. {}".format('\n. '.join(bigrams[-N:])))
-  print("  . Most correlated trigrams:\n. {}".format('\n. '.join(trigrams[-N:])))
+# N = 1
+# for Class, category_id in sorted(category_to_id.items()):
+#   features_chi2 = chi2(features, labels == category_id)
+#   indices = np.argsort(features_chi2[0])
+#   feature_names = np.array(tfidf.get_feature_names())[indices]
+#   unigrams = [v for v in feature_names if len(v.split(' ')) == 1]
+#   bigrams = [v for v in feature_names if len(v.split(' ')) == 2]
+#   trigrams = [v for v in feature_names if len(v.split(' ')) == 3]
+#   print("# '{}':".format(Class))
+#   print("  . Most correlated unigrams:\n. {}".format('\n. '.join(unigrams[-N:])))
+#   print("  . Most correlated bigrams:\n. {}".format('\n. '.join(bigrams[-N:])))
+#   print("  . Most correlated trigrams:\n. {}".format('\n. '.join(trigrams[-N:])))
 
 
 # Train a Naive Bayes Classifier
@@ -106,9 +108,9 @@ for Class, category_id in sorted(category_to_id.items()):
 # print(f"Got {correct} Correct out of {len(test_questions)} questions")
   
 models = [
-    RandomForestClassifier(n_estimators=200, max_depth=3, random_state=0),
+    #RandomForestClassifier(n_estimators=200, max_depth=3, random_state=0),
     LinearSVC(),
-    MultinomialNB(),
+    #MultinomialNB(),
     LogisticRegression(random_state=0),
 ]
 CV = 5

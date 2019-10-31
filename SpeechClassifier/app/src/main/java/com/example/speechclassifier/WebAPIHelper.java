@@ -39,10 +39,28 @@ public class WebAPIHelper {
             return null;
         }
         String decodedResponse = responseToString(response);
-        Log.d(TAG, decodedResponse);
 
         try{
             return new JSONArray(decodedResponse);
+        }catch(JSONException e){
+            Log.d(TAG, e.toString());
+            return null;
+        }
+    }
+
+    public static JSONObject getSplitQuestion(String question){
+        HashMap<String, String> params = new HashMap<>();
+        params.put("phrase", question);
+        InputStream response = get("http://api.axonbeats.com/phrase_splitter", params);
+
+        if(response == null){//exception thrown during web request
+            //TODO handle this better
+            return null;
+        }
+        String decodedResponse = responseToString(response);
+
+        try{
+            return new JSONObject(decodedResponse);
         }catch(JSONException e){
             Log.d(TAG, e.toString());
             return null;
@@ -60,7 +78,6 @@ public class WebAPIHelper {
             return new ArrayList<String>();
         }
         String decodedResponse = responseToString(response);
-        Log.d(TAG, decodedResponse);
 
         //change this to a JSON parsing library
         List<String> allMatches = new ArrayList<String>();
@@ -69,7 +86,6 @@ public class WebAPIHelper {
             String currentMatch = m.group();
             currentMatch = currentMatch.substring(1, currentMatch.length() - 1);
             allMatches.add(currentMatch);
-            Log.d(TAG, currentMatch);
         }
 
         return allMatches;
@@ -86,7 +102,6 @@ public class WebAPIHelper {
 
         String decodedResponse = responseToString(response);
         decodedResponse = decodedResponse.substring(1, decodedResponse.length() - 2);//get rid of "" on either side of the string
-        Log.d(TAG, decodedResponse);
 
         return decodedResponse;
     }
@@ -99,7 +114,6 @@ public class WebAPIHelper {
             return null;
         }
         Bitmap decodedResponse = responseToBitmap(response);
-        Log.d(TAG, "decoded:" + decodedResponse);
         return decodedResponse;
     }
 
@@ -109,7 +123,6 @@ public class WebAPIHelper {
     }
 
     private static InputStream get(String urlStr){
-        Log.d(TAG, "Get request start");
         InputStream[] response = new InputStream[1];
 
         Thread t = new Thread(new Runnable(){
@@ -124,7 +137,6 @@ public class WebAPIHelper {
                     Log.d(TAG, "URL: " + con.toString());
 
                     response[0] = new BufferedInputStream(con.getInputStream());
-                    Log.d(TAG, "Get request successful");
                 } catch (Exception e) {
                     Log.d(TAG, "Get request failure");
                     Log.d(TAG, e.toString());

@@ -127,6 +127,8 @@ class QuestionManager(keyWord: String,
                 playNotificationSound(mCanPlaySound)
                 // Get the question type
 
+                mainActivity.resetEntities()
+
                 val filteredPhrase = Phrase(filteredResult.originalResult)
                 val success = orchestrator.classify(filteredPhrase)
                 if (!success) {
@@ -136,12 +138,10 @@ class QuestionManager(keyWord: String,
                 }
                 else{
                     mainActivity.setFullPhrase(filteredResult.originalResult)
+                    mainActivity.setQuestionPhrase(orchestrator.getQuestionPhrase())
 
-                    //TODO add images
-                    mainActivity.resetEntities()
                     var listEntities: Set<String> = orchestrator.getListEntities()
                     Log.d(TAG, listEntities.toString())
-                    //TODO fix this shit
                     for (s in listEntities) {
                         val image = orchestrator.getImage(s)
                         mainActivity.addListEntity(image, s)

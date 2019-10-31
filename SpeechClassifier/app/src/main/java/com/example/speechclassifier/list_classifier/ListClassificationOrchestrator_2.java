@@ -20,7 +20,7 @@ public class ListClassificationOrchestrator_2 {
     public String questionPhrase;
     public HashMap<String, String> listEntities;
 
-    public String TAG = "SpeechRecognizerManager";
+    public String TAG = "ListClassifier_V2";
 
     public ListClassificationOrchestrator_2() {
         wwdetector = new WakewordDetectorImpl("John");
@@ -33,9 +33,17 @@ public class ListClassificationOrchestrator_2 {
         Phrase wwPhrase = phrase.subPhrase(wwdetector.getWWIndex() + 1);
 
         JSONArray parsedQuestion = WebAPIHelper.getParsedQuestion(wwPhrase.toString());
+        if(parsedQuestion == null)
+            return false;
 
         if(!extractListEntities(parsedQuestion))
             return false;
+
+        JSONObject splitQuestion = WebAPIHelper.getSplitQuestion(wwPhrase.toString());
+        questionPhrase = extractQuestionPhrase(splitQuestion);
+        if(questionPhrase == null){
+            return false;
+        }
 
         //if successfully parsed, store this as the most recent phrase
         recentPhrase = phrase;
@@ -50,12 +58,22 @@ public class ListClassificationOrchestrator_2 {
                 String listURL = object.getString("url");
                 listEntities.put(listEntity, listURL);
             }catch(Exception e){
+                Log.d(TAG, e.toString());
                 return false;
             }
         return true;
     }
 
-    public void clear(){
+    public String extractQuestionPhrase(JSONObject splitQuestion){
+        try{
+            return splitQuestion.getString("innvocation");
+        }catch(Exception e){
+            Log.d(TAG, e.toString());
+            return null;
+        }
+    }
+
+        public void clear(){
         recentPhrase = null;
         questionPhrase = null;
         listEntities.clear();

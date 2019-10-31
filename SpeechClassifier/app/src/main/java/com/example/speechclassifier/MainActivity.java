@@ -9,22 +9,13 @@ import com.example.speechclassifier.speechrecognition.QuestionManager;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.net.Uri;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
-import java.util.function.Function;
 
 
 public class MainActivity extends AppCompatActivity implements KeywordManagerCallback{
@@ -32,9 +23,7 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
     private String TAG = "MainActivity";
 
     private TextView fullPhrase;
-    private TextView launchPhrase;
-    private TextView invocationPhrase;
-    private TextView listEntityPhrase;
+    private TextView questionPhrase;
 
     QuestionManager mQuestionManager;
 
@@ -50,9 +39,7 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         View rootView = findViewById(R.id.layout);
 
         fullPhrase = rootView.findViewById(R.id.full_phrase);
-        launchPhrase = rootView.findViewById(R.id.launch_phrase);
-        invocationPhrase = rootView.findViewById(R.id.invocation_phrase);
-        listEntityPhrase = rootView.findViewById(R.id.list_entity_phrase);
+        questionPhrase = rootView.findViewById(R.id.question_phrase);
 
         Resources res = getResources();
         defaultImage = ResourcesCompat.getDrawable(res, R.drawable.pasta, null);
@@ -61,9 +48,7 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
 
         // init of text fields
         setFullPhrase("");
-        setInitiatorPhrase("");
-        setInvocationPhrase("");
-        setListEntityPhrase("");
+        setQuestionPhrase("");
 
         initNaturalConversation();
     }
@@ -94,16 +79,8 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         this.fullPhrase.setText("Full Phrase: " + fullPhrase);
     }
 
-    public void setInitiatorPhrase(String initiatorPhrase) {
-        this.launchPhrase.setText("Launch Phrase: " + initiatorPhrase);
-    }
-
-    public void setInvocationPhrase(String invocationPhrase) {
-        this.invocationPhrase.setText("Invocation Phrase: " + invocationPhrase);
-    }
-
-    public void setListEntityPhrase(String listEntityPhrase) {
-        this.listEntityPhrase.setText("List Phrase: " + listEntityPhrase);
+    public void setQuestionPhrase(String initiatorPhrase) {
+        this.questionPhrase.setText("Question Phrase: " + initiatorPhrase);
     }
 
     public void startListening(View view){

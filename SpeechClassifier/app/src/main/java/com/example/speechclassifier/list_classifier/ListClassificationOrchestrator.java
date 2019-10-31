@@ -29,7 +29,7 @@ public class ListClassificationOrchestrator {
 	public Phrase recentPhrase;
 	public int wwStart, lStart, iStart, uStart;
 
-	public String TAG = "SpeechRecognizerManager";
+	public String TAG = "ListClassifier_V1";
 	
 	public ListClassificationOrchestrator() {
 		wwdetector = new WakewordDetectorImpl("John");

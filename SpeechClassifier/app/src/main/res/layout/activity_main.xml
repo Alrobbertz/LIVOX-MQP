@@ -9,30 +9,12 @@
 
 
     <TextView
-        android:id="@+id/list_entity_phrase"
+        android:id="@+id/question_phrase"
         android:layout_width="411dp"
         android:layout_height="57dp"
         android:layout_marginTop="40dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/invocation_phrase" />
-
-    <TextView
-        android:id="@+id/invocation_phrase"
-        android:layout_width="408dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="40dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_phrase" />
-
-    <TextView
-        android:id="@+id/launch_phrase"
-        android:layout_width="413dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="40dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/full_phrase"
         app:layout_constraintTop_toBottomOf="@+id/full_phrase" />
 
     <TextView
@@ -53,7 +35,7 @@
         android:onClick="startListening"
         android:text="Start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_entity_phrase" />
+        app:layout_constraintTop_toBottomOf="@+id/question_phrase" />
 
     <Button
         android:id="@+id/button2"

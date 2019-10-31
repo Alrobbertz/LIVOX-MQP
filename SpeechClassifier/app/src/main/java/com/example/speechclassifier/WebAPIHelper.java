@@ -5,6 +5,10 @@ import android.graphics.BitmapFactory;
 import android.renderscript.ScriptGroup;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -23,6 +27,27 @@ public class WebAPIHelper {
     //TODO make sure that all input streams are closed
 
     private static final String TAG = "WebHelper";
+
+    public static JSONArray getParsedQuestion(String question){
+        HashMap<String, String> params = new HashMap<>();
+        params.put("phrase", question);
+        params.put("ngram", "3");
+        InputStream response = get("http://api.axonbeats.com/question_img_parser", params);
+
+        if(response == null){//exception thrown during web request
+            //TODO handle this better
+            return null;
+        }
+        String decodedResponse = responseToString(response);
+        Log.d(TAG, decodedResponse);
+
+        try{
+            return new JSONArray(decodedResponse);
+        }catch(JSONException e){
+            Log.d(TAG, e.toString());
+            return null;
+        }
+    }
 
     public static List<String> getListEntities(String utterance){
 

@@ -17,6 +17,7 @@ import com.example.speechclassifier.MainActivity
 import com.example.speechclassifier.WebAPIHelper
 import java.util.*
 import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator
+import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator_2
 import com.example.speechclassifier.list_classifier.Phrase
 import com.example.speechclassifier.list_classifier.UtteranceDetectorOnline
 import java.io.BufferedInputStream
@@ -61,7 +62,7 @@ class QuestionManager(keyWord: String,
     }
 
     //This is the code for list classification
-    private val orchestrator: ListClassificationOrchestrator = ListClassificationOrchestrator();
+    private val orchestrator: ListClassificationOrchestrator_2 = ListClassificationOrchestrator_2()
 
     interface KeywordManagerCallback {
         fun onQuestionFound(filteredResult: FilteredResult)
@@ -134,20 +135,15 @@ class QuestionManager(keyWord: String,
                     speechRecognizerHelper.listenAgain(false)
                 }
                 else{
-                    Log.d(TAG, "" + orchestrator.wwStart + " " + orchestrator.lStart + " " + orchestrator.iStart + " " + orchestrator.uStart)
                     mainActivity.setFullPhrase(filteredResult.originalResult)
-                    mainActivity.setInitiatorPhrase(orchestrator.launch)
-                    mainActivity.setInvocationPhrase(orchestrator.invocation)
-                    mainActivity.setListEntityPhrase(orchestrator.utterance)
 
                     //TODO add images
                     mainActivity.resetEntities()
-                    var listEntities: List<String> = orchestrator.listEntities
+                    var listEntities: Set<String> = orchestrator.getListEntities()
                     Log.d(TAG, listEntities.toString())
                     //TODO fix this shit
                     for (s in listEntities) {
-                        val imageURL = WebAPIHelper.getRelevantImage(s)
-                        val image = WebAPIHelper.getImage(imageURL)
+                        val image = orchestrator.getImage(s)
                         mainActivity.addListEntity(image, s)
                     }
                 }

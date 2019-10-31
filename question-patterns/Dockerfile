@@ -10,5 +10,6 @@ RUN pip3 install scikit-learn pandas matplotlib numpy
 
 COPY ./* /questions/
 COPY ./intent/* /questions/intent/
+COPY ./isList/* /questions/isList/
 
-ENTRYPOINT [ "python3", "/questions/intent/intent.py" ]
+ENTRYPOINT [ "python3", "/questions/isList/list.py" ]

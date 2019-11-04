@@ -33,13 +33,11 @@ def getDF(path):
     i += 1
   return pd.DataFrame.from_dict(df, orient='index')
 
-df = getDF('/questions/isList/qa_Grocery_and_Gourmet_Food.json.gz')
 
 # Load the CSV
 #df = pd.read_csv('/questions/intent/Question_Classification_Dataset.csv')
+df = getDF('/questions/isList/qa_Health_and_Personal_Care.json.gz')
 df.head()
-
-print(df)
 
 # Define the Columns
 col = ['questionType', 'asin', 'answerTime', 'unixTime', 'question', 'answer', 'answerType']
@@ -63,15 +61,17 @@ df.head()
 print("== Class Balances ==")
 print(df.groupby('Class').question.count())
 
+input_questions = df.question[:4000]
+
 # Do TF-IDF Vectorization, Set features, labels
 tfidf = TfidfVectorizer(sublinear_tf=True, min_df=1, norm='l2', encoding='latin-1', ngram_range=(1, 3), stop_words='english')
-features = tfidf.fit_transform(df.question).toarray()
-labels = df.category_id
+features = tfidf.fit_transform(input_questions).toarray()
+labels = df.category_id[:4000]
 print(features.shape)
 print(len(features))
-features = features[:int(len(features)/8)]
-labels = labels[:int(len(labels)/8)]
-print(features.shape)
+# features = features[:int(len(features)/8)]
+# labels = labels[:int(len(labels)/8)]
+# print(features.shape)
 
 # Chi^2 to find term most related with Classes
 # N = 1
@@ -131,9 +131,9 @@ print(features.shape)
 
 models = [
     #RandomForestClassifier(n_estimators=200, max_depth=3, random_state=0),
-    LinearSVC(),
+    LinearSVC(loss='squared_hinge'),
     #MultinomialNB(),
-    LogisticRegression(random_state=0),
+    #LogisticRegression(random_state=0),
 ]
 CV = 3
 cv_df = pd.DataFrame(index=range(CV * len(models)))

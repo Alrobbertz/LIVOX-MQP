@@ -2,32 +2,15 @@ package com.example.speechclassifier.speechrecognition
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Handler
 import android.util.Log
 import com.example.speechclassifier.MainActivity
-import com.example.speechclassifier.WebAPIHelper
-import java.util.*
-import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator
-import com.example.speechclassifier.list_classifier.ListClassificationOrchestrator_2
-import com.example.speechclassifier.list_classifier.Phrase
-import com.example.speechclassifier.list_classifier.UtteranceDetectorOnline
-import java.io.BufferedInputStream
-import java.net.HttpURLConnection
-import java.net.URL
-import java.io.BufferedReader
-import java.io.FileOutputStream
-import java.io.InputStreamReader
-import java.util.regex.Pattern
-
+import com.example.speechclassifier.list_classifier.ListClassifier
 
 /**
  * Created by Jason on 11/28/17.
@@ -48,8 +31,6 @@ class QuestionManager(keyWord: String,
     val speechRecognizerHelper = SpeechRecognizerHelper(mContext, true, this, languageTag)
 
     private val mRingtone = RingtoneManager.getRingtone(mContext, mSoundUri)
-    private val mMediaPlayer = MediaPlayer.create(mContext, mSoundUri)
-    private val mAudioManager = mContext.getSystemService(Context.AUDIO_SERVICE) as android.media.AudioManager
     private val mSpeechTriggerClassifier = SpeechTriggerClassifier(mContext, languageTag, keyWord)
 
     private var mCanPlaySound = true
@@ -60,9 +41,6 @@ class QuestionManager(keyWord: String,
         Log.d(TAG, "KEYWORD HAS BEEN CALLED: CANCELLED!")
         mHasKeywordBeenCalled = false
     }
-
-    //This is the code for list classification
-    private val orchestrator: ListClassificationOrchestrator_2 = ListClassificationOrchestrator_2()
 
     interface KeywordManagerCallback {
         fun onQuestionFound(filteredResult: FilteredResult)
@@ -129,8 +107,7 @@ class QuestionManager(keyWord: String,
 
                 mainActivity.resetEntities()
 
-                val filteredPhrase = Phrase(filteredResult.originalResult)
-                val success = orchestrator.classify(filteredPhrase)
+                val success = ListClassifier.getInstance().isClassifiable(filteredResult.sentenceToEvaluate)
                 if (!success) {
                     Log.d(TAG, "Unsuccessful at parsing sentence")
                     // Start Listening again
@@ -138,13 +115,14 @@ class QuestionManager(keyWord: String,
                 }
                 else{
                     mainActivity.setFullPhrase(filteredResult.originalResult)
-                    mainActivity.setQuestionPhrase(orchestrator.getQuestionPhrase())
+                    mainActivity.setQuestionPhrase(ListClassifier.getInstance().phrase)
 
-                    var listEntities: Set<String> = orchestrator.getListEntities()
+                    val succ = ListClassifier.getInstance().classify(filteredResult.originalResult)
+                    System.out.println(succ)
+                    var listEntities: List<String> = ListClassifier.getInstance().listEntities
                     Log.d(TAG, listEntities.toString())
                     for (s in listEntities) {
-                        val image = orchestrator.getImage(s)
-                        mainActivity.addListEntity(image, s)
+                        mainActivity.addListEntity(s)
                     }
                 }
                 //filteredResult.questionType = QuestionClassifier.getQuestionType(mContext, livoxNowHelper, filteredResult)

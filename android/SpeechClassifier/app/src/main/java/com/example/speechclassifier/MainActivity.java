@@ -58,19 +58,14 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
     private void initNaturalConversation() {
         String languageTag = "en-us";
 
-        //VolumeUtils.INSTANCE.muteStreamVolume(this, true);
 
         String mKeyword = "john";
         String KEYWORD_FOUND_TONE = "android.resource://br.com.livox/raw/keyword_found_tone";
         Uri keywordSoundUri = Uri.parse(KEYWORD_FOUND_TONE);
 
-        //int liteBlueColor = ContextCompat.getColor(this, R.color.lite_blue);
-        //mMainLayout.setBackgroundColor(liteBlueColor);
-
         mQuestionManager = new QuestionManager(mKeyword, languageTag, this, keywordSoundUri, this, this);
         mQuestionManager.startListeningForKeyword();
-        String keyword = mKeyword; //LivoxSettings.getNaturalConversationKeyword(this, mUserId);
-        Log.d(TAG,  "Listening for KEYWORD " + keyword);
+
     }
 
     public void onQuestionFound(FilteredResult filteredResult){}
@@ -91,9 +86,8 @@ public class MainActivity extends AppCompatActivity implements KeywordManagerCal
         mQuestionManager.stopListeningForKeyword();
     }
 
-    public void addListEntity(Bitmap image, String entityName){
+    public void addListEntity(String entityName){
         ListEntity newListEntity = new ListEntity(this);
-        newListEntity.setImage(image);
         newListEntity.setText(entityName);
         newListEntity.setLayoutParams(new ListEntity.LayoutParams(200, 300));
 

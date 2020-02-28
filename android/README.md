@@ -1,10 +1,10 @@
 Android Code Sections
 ===
 
-The Andoid code contains 2 sections. The ListClassifier package, and SpeechClassifier Android Example.
+The Andoid code contains the SpeechClassifier Android Example.
 
 
-ListClassifier: (./ListClassifier)
+SpeechClassifier: (./SpeechClassifier)
 ---
 
 The Android Package contains three major analytical parts:
